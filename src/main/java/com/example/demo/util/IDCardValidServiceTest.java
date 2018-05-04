@@ -40,7 +40,7 @@ public class IDCardValidServiceTest {
 	}
 	
 	public void test() throws Exception {
-		String license = "E:\\soft\\idcardvalidlicense.txt";
+		//String license = "E:\\soft\\idcardvalidlicense.txt";
 		String con = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><ROWS><INFO><SBM>深圳市汇合发展有限公司</SBM></INFO><ROW><GMSFHM>公民身份号码</GMSFHM><XM>姓名</XM></ROW><ROW FSD=\"110105\" YWLX=\"测试\" ><GMSFHM>412829198809243631</GMSFHM><XM>王健</XM></ROW></ROWS>";
 		
 		/*BufferedReader in = null;
