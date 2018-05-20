@@ -1,5 +1,6 @@
 package com.example.demo.thread;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -10,16 +11,20 @@ public class ThreadTest {
 	private Condition addCon = lock.newCondition();
 	private Condition subCon = lock.newCondition();
 	private static int n = 0;
+	private static ThreadLocal<String> threadLocal;
+	
 	public static void main(String[] args) {
 		ThreadTest test = new ThreadTest();
 		test.addThread();
 		test.subThread();
 		try {
-			Thread.currentThread().sleep(5000);
-		} catch (InterruptedException e) {
+			TimeUnit.SECONDS.sleep(5);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if((threadLocal != null))
+		System.out.println(threadLocal.get());
 		System.out.println("final n====="+n);
 	}
 	
@@ -55,12 +60,22 @@ public class ThreadTest {
 		}
 	}
 	
+	static int  k;
 	public void addThread() {
 		for(int i=0;i<20;i++) {
+			k = i;
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
 					add();
+					if(k == 18)
+					threadLocal = new ThreadLocal<String>() {
+						@Override
+						protected String initialValue() {
+							return Thread.currentThread().getName();
+						}
+						
+					};
 				}
 			}).start();
 		}
