@@ -23,7 +23,7 @@ public class ForkJoinActionTest extends RecursiveAction {
 	protected void compute() {
 		if(datas == null)
 			return;
-		if(datas.size() < THRESHOLD) {
+		if(datas.size() <= THRESHOLD) {
 			//直接处理
 			for(String d:datas) {
 				System.out.println(d);

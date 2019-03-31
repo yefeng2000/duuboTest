@@ -23,7 +23,7 @@ public class ForkJoinTaskTest extends RecursiveTask<Integer> {
 		int rest = 0;
 		if(datas == null)
 			return rest;
-		if(datas.size() < THRESHOLD) {
+		if(datas.size() <= THRESHOLD) {
 			//直接处理
 			for(String d:datas) {
 				if(d.contains("0"))
