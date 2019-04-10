@@ -4,7 +4,11 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.concurrent.RecursiveTask;
 import java.util.concurrent.atomic.AtomicInteger;
-
+/**
+ * 计算start 到 end 累加合
+ * @author Administrator
+ *
+ */
 public class ForkJoinTest extends RecursiveTask<Integer>{
 
 	private static AtomicInteger n = new AtomicInteger(0);
