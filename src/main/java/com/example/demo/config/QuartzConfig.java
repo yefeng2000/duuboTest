@@ -46,7 +46,7 @@ public class QuartzConfig {
         bean.setStartTime(new Date());
         bean.setRepeatCount(5);
         bean.setJobDetail(methodInvokingJobDetailFactoryBean().getObject());
-        bean.setRepeatInterval(3000);
+        bean.setRepeatInterval(3000000);
         return bean;
 
     }
@@ -54,7 +54,7 @@ public class QuartzConfig {
     @Bean
     CronTriggerFactoryBean cronTrigger(){
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
-        bean.setCronExpression("0/10 * * * * ?");
+        bean.setCronExpression("0/60 * * * * ?");
         bean.setJobDetail(jobDetailFactoryBean().getObject());
         return bean;
 

@@ -20,7 +20,7 @@ public class ScheduledJob {
      * eg:@Scheduled(cron ="0/5 * * * * *")  每隔5分钟执行一次
      * fixedRate 表示任务执行之间的时间间隔，具体是指两次任务的开始时间间隔，即第二次任务开始时，第一次任务可能还没结束
      */
-    @Scheduled(fixedRate=5000)
+    @Scheduled(fixedRate=500000)
     public void fixedRate(){
         System.out.println("fixedRate>>>"+DateUtils.forDatetime(new Date()));
     }
@@ -28,7 +28,7 @@ public class ScheduledJob {
     /**
      * fixedDelay 表示任务执行之间的时间间隔，具体是指本次任务结束到下次任务开始之间的时间间隔
      */
-    @Scheduled(fixedDelay=8000)
+    @Scheduled(fixedDelay=800000)
     public void fixedDelay(){
         System.out.println("fixedDelay>>>"+DateUtils.forDatetime(new Date()));
     }
@@ -36,7 +36,7 @@ public class ScheduledJob {
     /**
      * initialDelay 表示首次任务启动的延迟时间
      */
-    @Scheduled(initialDelay=8000,fixedDelay= 7000)
+    @Scheduled(initialDelay=800000,fixedDelay= 7000)
     public void initialDelay(){
         System.out.println( "initialDelay>>>" + DateUtils.forDatetime(new Date()));
     }
