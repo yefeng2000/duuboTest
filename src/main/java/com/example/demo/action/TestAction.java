@@ -7,6 +7,7 @@ import java.util.Map;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.example.demo.model.User;
+import com.example.demo.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,8 @@ public class TestAction {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(TestAction.class);
 
+	@Autowired
+	private UserService userService;
 	@Autowired
     private RedisUtil redisUtil;
 	//@Reference(version="1.0.1")
@@ -57,15 +60,16 @@ public class TestAction {
 	@ApiOperation("根据id查询用户的接口")
 	@ApiImplicitParam(name="name",value="用户name",defaultValue="99",required=true)
 	public String hello(@PathVariable("name") String name,/*@ApiParam(name = "say",value = "内容",required = false)*/ String say){
-		User user = new User();
+		/*User user = new User();
 		user.setCreateTime(new Date());
 		user.setLoginName("test");
 		user.setNickName("风雨兼程");
 		user.setLoginPwd("8888888888");
-		user.setType("1");
+		user.setType("1");*/
+		User user = userService.getUserByLoginName(name);
 		LOGGER.info("请求参数信息：{}",JSON.toJSONStringWithDateFormat(user,"yyyy-MM-dd HH:mm:ss",SerializerFeature.WriteDateUseDateFormat));
 
-		return "用户："+name+" =="+say;
+		return "用户："+name+" =="+JSON.toJSONStringWithDateFormat(user,"yyyy-MM-dd HH:mm:ss",SerializerFeature.WriteDateUseDateFormat);
 	}
 
 }
