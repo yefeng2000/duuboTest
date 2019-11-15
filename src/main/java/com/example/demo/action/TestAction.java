@@ -6,6 +6,8 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.example.demo.RunTest;
+import com.example.demo.aop.NoRepeatSubmit;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import io.swagger.annotations.Api;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -35,10 +38,13 @@ public class TestAction {
 	//@Reference(version="1.0.1")
 	@Autowired
 	private IDCardValidServiceTest idCardValidService;
-	
+	@Autowired
+	private RunTest runTest;
+
+	@NoRepeatSubmit(lockTime = 6)
 	@GetMapping("/test")
 	@ApiOperation("根据id更新用户的接口")
-	public Map<Object,Object> test() throws Exception{
+	public Object test() throws Exception{
 		Map<Object,Object> map = new HashMap<>(2);
 		map.put("hello", "world");
 		map.put("你好", "地球");
@@ -53,23 +59,36 @@ public class TestAction {
 			System.out.println(m);
 			
 		}
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}System.out.println(map.toString());
+		//runTest.run(null);
 		return map;
 	}
 
-	@GetMapping("/hello/{name}")
+	@NoRepeatSubmit(lockTime = 6)
+	@PostMapping("/hello/{name}")
 	@ApiOperation("根据id查询用户的接口")
 	@ApiImplicitParam(name="name",value="用户name",defaultValue="99",required=true)
-	public String hello(@PathVariable("name") String name,/*@ApiParam(name = "say",value = "内容",required = false)*/ String say){
-		/*User user = new User();
+	public Object hello(@PathVariable("name") String name,/*@ApiParam(name = "say",value = "内容",required = false)*/ String say){
+		User user = new User();
 		user.setCreateTime(new Date());
 		user.setLoginName("test");
 		user.setNickName("风雨兼程");
 		user.setLoginPwd("8888888888");
-		user.setType("1");*/
-		User user = userService.getUserByLoginName(name);
-		LOGGER.info("请求参数信息：{}",JSON.toJSONStringWithDateFormat(user,"yyyy-MM-dd HH:mm:ss",SerializerFeature.WriteDateUseDateFormat));
+		user.setType("1");
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		//User user = userService.getUserByLoginName(name);
+		//LOGGER.info("请求参数信息：{}",JSON.toJSONStringWithDateFormat(user,"yyyy-MM-dd HH:mm:ss",SerializerFeature.WriteDateUseDateFormat));
 
-		return "用户："+name+" =="+JSON.toJSONStringWithDateFormat(user,"yyyy-MM-dd HH:mm:ss",SerializerFeature.WriteDateUseDateFormat);
+		//return "用户："+name+" =="+JSON.toJSONStringWithDateFormat(user,"yyyy-MM-dd HH:mm:ss",SerializerFeature.WriteDateUseDateFormat);
+		return "============请求成功。。。。。。";
 	}
 
 }

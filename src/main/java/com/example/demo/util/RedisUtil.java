@@ -133,4 +133,17 @@ public boolean set(final String key, Object value, Long expireTime) {
         }
         return result;
     }
+
+    public boolean tryLock(String lockKey, String clientId, long seconds){
+        Boolean res = redisTemplate.opsForValue().setIfAbsent(lockKey,clientId);
+        redisTemplate.expire(lockKey,seconds,TimeUnit.SECONDS);
+        return res;
+    }
+
+    public boolean releaseLock(String lockKey, String clientId){
+        if(redisTemplate.hasKey(lockKey)) {
+            redisTemplate.delete(lockKey);
+        }
+        return true;
+    }
 }

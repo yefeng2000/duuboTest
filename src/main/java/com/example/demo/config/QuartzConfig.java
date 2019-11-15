@@ -54,7 +54,7 @@ public class QuartzConfig {
     @Bean
     CronTriggerFactoryBean cronTrigger(){
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
-        bean.setCronExpression("0/60 * * * * ?");
+        bean.setCronExpression("0/50 * * * * ?");
         bean.setJobDetail(jobDetailFactoryBean().getObject());
         return bean;
 
